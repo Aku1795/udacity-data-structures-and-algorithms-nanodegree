@@ -5,6 +5,7 @@ It's ok if you don't understand how to read files.
 import csv
 
 def getPhoneNumbers(_list):
+    """Get receiver and sender numbers and returns a list of all numbers in records"""
     phone_numbers = []
     for t in _list:
         phone_numbers.append(t[0])
