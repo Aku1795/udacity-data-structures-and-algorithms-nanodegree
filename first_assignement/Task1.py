@@ -20,11 +20,13 @@ with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
     calls = list(reader)
 
+def main():
+    phone_numbers = getPhoneNumbers(texts) + getPhoneNumbers(calls)
+    nb_phone_numbers = len(set(phone_numbers))
+    answer = "There are {} different telephone numbers in the records.".format(nb_phone_numbers)
+    print(answer)
 
-phone_numbers = getPhoneNumbers(texts) + getPhoneNumbers(calls)
-nb_phone_numbers = len(list(set(phone_numbers)))
-answer = "There are {} different telephone numbers in the records.".format(nb_phone_numbers)
-print(answer)
+main()
 
 
 """
