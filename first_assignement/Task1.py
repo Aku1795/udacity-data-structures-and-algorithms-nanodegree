@@ -4,6 +4,7 @@ It's ok if you don't understand how to read files.
 """
 import csv
 
+
 def getPhoneNumbers(_list):
     """Get receiver and sender numbers and returns a list of all numbers in records"""
     phone_numbers = []
@@ -13,19 +14,24 @@ def getPhoneNumbers(_list):
 
     return phone_numbers
 
-with open('texts.csv', 'r') as f:
+
+with open("texts.csv", "r") as f:
     reader = csv.reader(f)
     texts = list(reader)
 
-with open('calls.csv', 'r') as f:
+with open("calls.csv", "r") as f:
     reader = csv.reader(f)
     calls = list(reader)
+
 
 def main():
     phone_numbers = getPhoneNumbers(texts) + getPhoneNumbers(calls)
     nb_phone_numbers = len(set(phone_numbers))
-    answer = "There are {} different telephone numbers in the records.".format(nb_phone_numbers)
+    answer = "There are {} different telephone numbers in the records.".format(
+        nb_phone_numbers
+    )
     print(answer)
+
 
 main()
 

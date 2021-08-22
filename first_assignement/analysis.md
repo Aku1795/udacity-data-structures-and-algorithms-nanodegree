@@ -5,10 +5,10 @@ Common to all tasks is the number of operations needed to read in the csv files 
 
 ## Task 0
 
-After reading in the files 5 simple operations are performed so the worst case scenario is to get a O(5).
+After reading in the files 5 simple operations are performed so the worst case scenario is to get a O(1).
 
 ## Task 1
-The worst case scenario is a O(4n+2) and below is the detailed explanation:
+The worst case scenario is a O(n) and below is the detailed explanation:
 
     ⁃	Getting all the numbers in both records has a number of operations equal to O(4n) (O(2n) per record cause we need to iterate through all rows and excecute 2 operation per rows)
 
@@ -16,7 +16,7 @@ The worst case scenario is a O(4n+2) and below is the detailed explanation:
 
     ⁃	Printing the message is a O(1).
 ## Task 2
-The worst case scenario is a O(2n+1) and below is the detailed explanation:
+The worst case scenario is a O(n) and below is the detailed explanation:
 
     ⁃	O(n) for getting the calling times per number
 
@@ -26,7 +26,7 @@ The worst case scenario is a O(2n+1) and below is the detailed explanation:
 
 ## Task 3
 
-The worst case scenario is a O(4n + nlogn) for part A and below is the detailed explanation:
+The worst case scenario is a O(nlogn) for part A and below is the detailed explanation:
 
     - O(n) for computing the number of calls per number
 
@@ -39,7 +39,7 @@ The worst case scenario is a O(4n + nlogn) for part A and below is the detailed 
 
 ## Task 4
 
-The worst case scenario is a O(n^2 + nlogn + 12n) and below is the detailed explanation:
+The worst case scenario is a O(n^2) and below is the detailed explanation:
 
     ⁃	O(4n) for generating the textReceivers and callReceivers sets
 

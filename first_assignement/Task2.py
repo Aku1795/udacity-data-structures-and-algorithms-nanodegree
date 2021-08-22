@@ -3,13 +3,15 @@ Read file into texts and calls.
 It's ok if you don't understand how to read files
 """
 import csv
-with open('texts.csv', 'r') as f:
+
+with open("texts.csv", "r") as f:
     reader = csv.reader(f)
     texts = list(reader)
 
-with open('calls.csv', 'r') as f:
+with open("calls.csv", "r") as f:
     reader = csv.reader(f)
     calls = list(reader)
+
 
 def computeTimeSpentOnCall(calls):
 
@@ -25,14 +27,20 @@ def computeTimeSpentOnCall(calls):
             callingTimes[c[1]] += int(c[3])
     return callingTimes
 
+
 def maxDurationNumber(callingTimes):
     maxCaller = max(callingTimes, key=callingTimes.get)
     maxDuration = callingTimes[maxCaller]
     return maxCaller, maxDuration
 
+
 callingTimes = computeTimeSpentOnCall(calls)
 maxCaller, maxDuration = maxDurationNumber(callingTimes)
-answer = "{} spent the longest time, {} seconds, on the phone during September 2016.".format(maxCaller, maxDuration)
+answer = (
+    "{} spent the longest time, {} seconds, on the phone during September 2016.".format(
+        maxCaller, maxDuration
+    )
+)
 print(answer)
 
 """
@@ -43,4 +51,3 @@ Print a message:
 "<telephone number> spent the longest time, <total time> seconds, on the phone during 
 September 2016.".
 """
-

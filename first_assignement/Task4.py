@@ -4,37 +4,37 @@ It's ok if you don't understand how to read files.
 """
 import csv
 
-with open('texts.csv', 'r') as f:
+with open("texts.csv", "r") as f:
     reader = csv.reader(f)
     texts = list(reader)
 
-with open('calls.csv', 'r') as f:
+with open("calls.csv", "r") as f:
     reader = csv.reader(f)
     calls = list(reader)
+
 
 def getReceivers(data):
     """Returns set of numbers being at least once on the receiver end"""
 
-    return set([row[1] for row in data ])
+    return set([row[1] for row in data])
+
 
 def getSender(data):
     """Returns set of numbers being at least once on the sender end"""
 
-
     return set([row[0] for row in data])
 
-def getCallersWithoutTextings(calls, texts):
-    """Returns the diffrence  between callers and texters"""
+
+def getPotentialTeleMarketers(calls, texts):
+    """Returns the telemarketers by using diffs"""
 
     callers = getSender(calls)
     texters = getSender(texts)
+    text_receivers = getReceivers(texts)
+    call_receivers = getReceivers(calls)
 
-    return callers-texters
+    return callers - texters - text_receivers - call_receivers
 
-def getPotentialTeleMarketers(receivers, callersWithoutTexters):
-    """Returns the intersection  between receivers and callersWithoutTexters"""
-
-    return receivers&callersWithoutTexters
 
 def finalPrint(potentialTelemarketers):
 
@@ -52,15 +52,10 @@ def test():
     assert list(textReceivers) != []
     assert list(callReceivers) != []
 
+
 def run():
 
-    textReceivers = getReceivers(texts)
-    callReceivers = getReceivers(calls)
-    receivers = textReceivers.union(callReceivers)
-
-    callersWithoutTexters = getCallersWithoutTextings(texts, calls)
-    potentialTelemarketers = getPotentialTeleMarketers(receivers, callersWithoutTexters)
-
+    potentialTelemarketers = getPotentialTeleMarketers(calls, texts)
     finalPrint(potentialTelemarketers)
 
 
@@ -78,4 +73,3 @@ Print a message:
 <list of numbers>
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
-

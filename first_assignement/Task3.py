@@ -4,93 +4,95 @@ It's ok if you don't understand how to read files.
 """
 import csv
 
-with open('texts.csv', 'r') as f:
+with open("texts.csv", "r") as f:
     reader = csv.reader(f)
     texts = list(reader)
 
-with open('calls.csv', 'r') as f:
+with open("calls.csv", "r") as f:
     reader = csv.reader(f)
     calls = list(reader)
 
-#constants
+# constants
 BENGALORE_CODE = "(080)"
 
+
 def containsCode(call, code):
-  if code in call:
-    return True
-  return False
+    if code in call:
+        return True
+    return False
+
 
 def getCallsFrom(calls, code):
-  """Keeping only land line calls from Bengalore"""
-  
-  return [c for c in calls if containsCode(c[0], code)]
+    """Keeping only land line calls from Bengalore"""
+
+    return [c for c in calls if containsCode(c[0], code)]
+
 
 def extractAreaCode(number):
-  """Given a called number extract the area code"""
-  if number[:3] == "140":
-    return "140"
-  if number[0] == "(":
-    return number.split(")")[0]+ ")"
-  else: 
-    return number[:5]
+    """Given a called number extract the area code"""
+    if number[:3] == "140":
+        return "140"
+    if number[0] == "(":
+        return number.split(")")[0] + ")"
+    if number[0] in ["7", "8", "9"]:
+        return number[:4]
+
 
 def computeCallsoPerCodes(callsFrom):
-  """For each area code reached from Bengalore compute total number of calls"""
-  nbCallsPerCode = {}
+    """For each area code reached from Bengalore compute total number of calls"""
+    nbCallsPerCode = {}
 
-  for c in callsFrom:
-    code = extractAreaCode(c[1])
-    if nbCallsPerCode.get(code) is None:
-      nbCallsPerCode[code] = 1
-    else:
-      nbCallsPerCode[code] += 1
-  return nbCallsPerCode
+    for c in callsFrom:
+        code = extractAreaCode(c[1])
+        if nbCallsPerCode.get(code) is None:
+            nbCallsPerCode[code] = 1
+        else:
+            nbCallsPerCode[code] += 1
+    return nbCallsPerCode
+
 
 def orderedAreaCodes(nbCallsPerCode):
-  """Returns in lexicographic order the area codes reached"""
+    """Returns in lexicographic order the area codes reached"""
 
-  return sorted(nbCallsPerCode.keys())
+    return sorted(nbCallsPerCode.keys())
+
 
 def printPartA(nbCallsPerCode):
-  area_codes = orderedAreaCodes(nbCallsPerCode)
-  print("The numbers called by people in Bangalore have codes:")
-  for c in area_codes:
-    print(c)
+    area_codes = orderedAreaCodes(nbCallsPerCode)
+    print("The numbers called by people in Bangalore have codes:")
+    for c in area_codes:
+        print(c)
 
 
 def printPartB(nbCallsPerCode):
-  
-  landlineCalls = sum([nbCallsPerCode[c] for c in nbCallsPerCode if c[0]== "(" ])
-  otherCalls = sum([nbCallsPerCode[c] for c in nbCallsPerCode if c[0]!= "(" ])
 
-  landlinePct = round(landlineCalls*100.0 / (landlineCalls+ otherCalls),2)
-  answer = "{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore".format(landlinePct)
+    landlineCalls = sum([nbCallsPerCode[c] for c in nbCallsPerCode if c[0] == "("])
+    landlinePct = round(nbCallsPerCode["(080)"] * 100.0 / (landlineCalls), 2)
+    answer = "{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore".format(
+        landlinePct
+    )
 
-  print(answer)
+    print(answer)
 
 
 def test():
+    assert containsCode("(080)575757", BENGALORE_CODE) == True
+    assert len(getCallsFrom(calls, BENGALORE_CODE)) != 0
+    assert extractAreaCode("(080)") == "(080)"
+    assert extractAreaCode("(08009)") == "(08009)"
+    assert extractAreaCode("98009 000949") == "9800"
+    assert extractAreaCode("140000949") == "140"
+    nbCallsPerCode = computeCallsoPerCodes(getCallsFrom(calls, BENGALORE_CODE))
+    assert len(orderedAreaCodes(nbCallsPerCode)) != 0
 
-  #prints
-  #print(calls[:10])
+    print()
+    print("All test succeeded!")
 
-  #tests
-  assert containsCode("(080)575757", BENGALORE_CODE) == True
-  assert len(getCallsFrom(calls, BENGALORE_CODE)) != 0
-  assert extractAreaCode("(080)") == "(080)"
-  assert extractAreaCode("(08009)") == "(08009)"
-  assert extractAreaCode("98009 000949") == "98009"
-  assert extractAreaCode("140000949") == "140"
-  nbCallsPerCode = computeCallsoPerCodes(getCallsFrom(calls, BENGALORE_CODE))
-  assert len(orderedAreaCodes(nbCallsPerCode)) != 0
-
-  print()
-  print("All test succeeded!")
 
 def run():
-  nbCallsPerCode = computeCallsoPerCodes(getCallsFrom(calls, BENGALORE_CODE))
-  printPartA(nbCallsPerCode)
-  printPartB(nbCallsPerCode)
+    nbCallsPerCode = computeCallsoPerCodes(getCallsFrom(calls, BENGALORE_CODE))
+    printPartA(nbCallsPerCode)
+    printPartB(nbCallsPerCode)
 
 
 test()
