@@ -5,5 +5,5 @@ setup-env:
 	pip install -r requirements.txt
 
 format: 
-	source "venv/bin/activate"
-	python -m black .
+	source "venv/bin/activate";
+	python -m black . ;
