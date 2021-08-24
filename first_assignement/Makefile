@@ -1,9 +1,15 @@
-setup-env:
-	pip install virtualenv
-	virtualenv venv
-	source venv/bin/activate
-	pip install -r requirements.txt
+setup-environment:
+	pip3 install virtualenv==20.0.15
+	virtualenv env
+	source env/bin/activate; \
+	pip3 install -r requirements.txt
 
-format: 
-	source "venv/bin/activate";
-	python -m black . ;
+format:
+	@echo Formatting...
+	source env/bin/activate; \
+	python -m black .
+
+lint: format
+	@echo Linting...
+	source env/bin/activate; \
+	python -m flake8 .
