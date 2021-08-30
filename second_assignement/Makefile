@@ -7,9 +7,9 @@ setup-environment:
 format:
 	@echo Formatting...
 	source env/bin/activate; \
-	python -m black problem_1.py
+	python -m black problem_1.py problem_2.py
 
 lint: format
 	@echo Linting...
 	source env/bin/activate; \
-	python -m flake8 problem_1.py
+	python -m flake8 problem_1.py problem_2.py
